@@ -1,0 +1,55 @@
+.buttons-section Button,
+.buttons-section Link {
+    margin: 15px;
+    background-color: #343a40;
+    letter-spacing: normal;
+    text-align: center;
+    border-style: solid;
+    text-decoration: none;
+}
+
+.container {
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+
+.container .row {
+  padding: 1rem;
+}
+
+#descriptionSubject {
+  margin-top: 6rem;
+  background: radial-gradient(#e5e5e5, #ffff, #e5e5e5);
+}
+  
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.subject-button {
+  padding: 5px 10px !important;
+  margin-right: 10px;
+}
+
+.subject-button:hover {
+  background-color: #5c636a !important;
+}
+
+.list-element {
+  margin-bottom: 10px;
+}
+
+.score-value {
+  padding-left: 0;
+}
+
+.pdf-download,
+.pdf-download:hover {
+  text-decoration: none;
+  color: white;
+}
