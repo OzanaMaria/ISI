@@ -3,13 +3,21 @@ import 'firebase/compat/auth';
 import "firebase/compat/database";
 
 const app = firebase.initializeApp({
-    apiKey: "AIzaSyB5A3ETp5RD9DHTWw6JQeQbuRvNBbf5AlM",
-    authDomain: "qresent-c8ad8.firebaseapp.com",
-    projectId: "qresent-c8ad8",
-    storageBucket: "qresent-c8ad8.appspot.com",
-    messagingSenderId: "861563415852",
-    appId: "1:861563415852:web:56601e9d168e0b85909089",
-    databaseURL: 'https://qresent-c8ad8-default-rtdb.europe-west1.firebasedatabase.app/'
+    apiKey: "AIzaSyD6SFXdiscwOk-QDTlfaeq6eWLFMGg9BDk",
+
+  authDomain: "lab5-5dafa.firebaseapp.com",
+
+  databaseURL: "https://lab5-5dafa-default-rtdb.europe-west1.firebasedatabase.app/",
+
+  projectId: "lab5-5dafa",
+
+  storageBucket: "lab5-5dafa.appspot.com",
+
+  messagingSenderId: "42916288049",
+
+  appId: "1:42916288049:web:00ffdae34289b5657f2710",
+
+  measurementId: "G-WXFYJTRT8X"
 })
 
 export const auth = app.auth()
