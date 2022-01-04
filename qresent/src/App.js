@@ -16,7 +16,8 @@ import UpdateUser from "./components/Dashboard/UpdateUser";
 import EditProfile from "./components/Subject/EditProfile";
 import StudentsManagement from "./components/Auth/Users/StudentsManagement";
 import TeachersManagement from "./components/Auth/Users/TeachersManagement";
-
+import Add from "./components/Dashboard/Add";
+import AddOffer from "./components/Dashboard/AddOffer";
 function App() {
   
 
@@ -42,6 +43,8 @@ function App() {
                 <PrivateRoute exact path="/scanqr" component={ScanQr}/>
                 <PrivateRoute exact path="/profil" component={Profile}/>
                 <PrivateRoute exact path="/edit" component={EditProfile}/>
+                <PrivateRoute exact path="/addRequest" component={Add}/>
+                <PrivateRoute exact path="/addOffer" component={AddOffer}/>
               </Switch>
             </AuthProvider>
           </Router>

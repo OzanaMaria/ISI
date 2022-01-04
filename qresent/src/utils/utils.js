@@ -15,6 +15,7 @@ export function GetFirebaseKeyStudent(email: string) {
     Refs.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
           const childData = childSnapshot.val();
+         
           if(childData.email === email) {
             entry = childSnapshot.key;
           }

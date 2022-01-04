@@ -11,9 +11,12 @@ const Card = props => {
       </div>
       
       <div className="card-body text-dark">
-        <h4 className="card-title">{ props.course.name }</h4>
+        <h4 className="card-title">{ props.course.email }</h4>
         <p className="card-text text-secondary">
-          Titular curs: { props.course.professor }
+          Titular curs: { props.course.email }
+        </p>
+        <p className="card-text text-secondary">
+          Departure time: { props.course.dep_date }
         </p>
         <Link className="btn btn-outline-success" to={{pathname: `/subject/${props.course.name}`}}> More info </Link>
       </div>
