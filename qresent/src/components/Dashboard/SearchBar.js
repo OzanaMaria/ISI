@@ -1,9 +1,15 @@
 import React, { Component} from 'react';
 import { database, auth } from "../../firebase";
 import './SearchBar.css';
+import app from "../../firebase.js"
 import { Link, useHistory } from "react-router-dom";
-export default function SearchBar(){
-    
+import { useState } from 'react';
+const db = app.database(); 
+
+
+function SearchBar(){
+
+    const [searchTerm, setSearchTerm] = useState('');
     const SearchBarDropdown = (props) =>{
         return(
         <div className='search-bar-dropdown'> 
@@ -16,9 +22,19 @@ export default function SearchBar(){
     return (
         <>
          <div className='SearchBar container mt-2 mb-3'>
-            <h1>Search Bar</h1>
-            <SearchBarDropdown/>     
+            <input type="text" placeholder="Search Contacts" className="prompt"
+            onChange={(event) => {
+                setSearchTerm(event.target.value);
+               // console.log(searchTerm);
+              // searchTerm =
+              if(searchTerm!="")
+                db.ref("search").child('-Ms_mawlSAPNdVeXvEnJ').update({'searchWord':searchTerm});
+            }}/>
+            
+            <i className="search icon"></i>
         </div>  
         </>
     )
 }
+export default SearchBar;
+

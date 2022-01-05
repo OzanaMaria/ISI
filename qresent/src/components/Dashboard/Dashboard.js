@@ -6,20 +6,25 @@ import { database, auth } from "../../firebase";
 import './Dashboard.css'
 import { Link, useHistory } from "react-router-dom";
 import SearchBar from './SearchBar';
+
 class Dashboard extends Component{
     constructor(props) {
         super(props);
         this.state = {
             courses: [],
-            email: ""
+            email: "",
+            searchTerm: "",
+            
         }
     }
-
+    
     async componentDidMount() {
         let coursesList = [];
         const subjectsRefs = database.ref('transpOffer');
         const clientsOfferRefs = database.ref('materii');
         const email = auth.currentUser.email;
+        let profCoursesList = [];
+        let searchL = "";
 
         if(CheckIfUserIsStudent(email)) {
             let studentCoursesList = [];
@@ -29,7 +34,7 @@ class Dashboard extends Component{
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val();
                     const nume = childData.name;
-                    console.log(childData);
+                  //  console.log(childData);
                     
                         coursesList.push(childData);
                     
@@ -38,9 +43,9 @@ class Dashboard extends Component{
                 this.setState({ courses : coursesList, email: email });
             });
         } else {
-            let profCoursesList = [];
+            
             const profRefs = database.ref('professors');
-
+            const searchword = database.ref('search');
             await profRefs.on('value', snapshot => {
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val();
@@ -60,21 +65,42 @@ class Dashboard extends Component{
 
                 this.setState({ courses : coursesList, email: email  });
             });
+            await searchword.on('value', snapshot => {
+                snapshot.forEach(childSnapshot => {
+                    const childData = childSnapshot.val();
+                    
+                    searchL = childData.searchWord;
+                    console.log( searchL);
+                    
+                });
+
+                this.setState({ searchTerm : searchL});
+            });
         }
     }
 
     render(){
+        
         return(
             <div>
                 {   
                     this.state.courses.length ? 
                     
                     (<div>
-                        {!CheckIfUserIsStudent(this.state.email) && <SearchBar></SearchBar>}
+                        {!CheckIfUserIsStudent(this.state.email) && <SearchBar/>}
                         <div className="container-fluid d-flex justify-content-center">
                             <div className="row" id="courses">
                                 {
-                                    this.state.courses.map(course => (
+                                    this.state.courses.filter(val=> {
+                                         if(this.state.searchTerm ==" "){
+                                            return val 
+                                         }
+                                        else
+                                         if(val.dep_date?.includes(this.state.searchTerm)){
+                                            //console.log(this.state.searchTerm.search);
+                                            return val
+                                        }
+                                    }).map(course => (
                                         <div className="col-md-4">
                                             <Card imgsrc={img1} course={course}/>
                                            
