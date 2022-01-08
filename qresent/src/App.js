@@ -8,6 +8,7 @@ import Dashboard from './components/Dashboard/Dashboard';
 import Navbar from "./components/Navbar/Navbar";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import Subject from "./components/Subject/Subject";
+import Subject2 from "./components/Subject2/Subject2";
 import Form from "./components/Form/Form";
 import ScanQr from "./components/ScanQR/ScanQr";
 import Profile from "./components/Profile/Profile"
@@ -19,6 +20,7 @@ import TeachersManagement from "./components/Auth/Users/TeachersManagement";
 import Add from "./components/Dashboard/Add";
 import AddOffer from "./components/Dashboard/AddOffer";
 import MyContracts from "./components/MyContracts/MyContracts";
+import ShowMap from "./components/ArcGisMap/ShowMap";
 function App() {
   
 
@@ -40,6 +42,7 @@ function App() {
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/subject/:id" component={Subject}/>
+                <PrivateRoute exact path="/subject2/:id" component={Subject2}/>
                 <PrivateRoute exact path="/form" component={Form}/>
                 <PrivateRoute exact path="/scanqr" component={ScanQr}/>
                 <PrivateRoute exact path="/profil" component={Profile}/>
@@ -47,6 +50,7 @@ function App() {
                 <PrivateRoute exact path="/addRequest" component={Add}/>
                 <PrivateRoute exact path="/addOffer" component={AddOffer}/>
                 <PrivateRoute exact path="/contracts" component={MyContracts}/>
+                <PrivateRoute exact path="/ShowMap" component={ShowMap}/>
               </Switch>
             </AuthProvider>
           </Router>

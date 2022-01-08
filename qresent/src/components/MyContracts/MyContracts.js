@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import Card from '../Card/Card';
+import Card2 from '../Card2/Card';
 import img1 from '../Dashboard/react-logo.png';
 import { CheckIfUserIsStudent } from '../../utils/utils.js';
 import { database, auth } from "../../firebase";
@@ -19,24 +19,28 @@ class MyContracts extends Component{
     
     async componentDidMount() {
         let coursesList = [];
-        const subjectsRefs = database.ref('contracte');
-        const contractsRefs = database.ref('contracte');
+        
+        const contractsRefs = database.ref('contract');
         const clientsOfferRefs = database.ref('materii');
         const email = auth.currentUser.email;
         let profCoursesList = [];
         let searchL = "";
 
         if(CheckIfUserIsStudent(email)) {
+            console.log('aici');
             let studentCoursesList = [];
-            const studentRefs = database.ref('students');
+            
 
-            await subjectsRefs.on('value', snapshot => {
+            await contractsRefs.on('value', snapshot => {
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val();
-                    const nume = childData.name;
-                  //  console.log(childData);
+                    console.log('aici');
                     
+                    console.log(childData.email_client);
+                    console.log(email);
+                    if(childData.email_client === email){
                         coursesList.push(childData);
+                    }
                     
                 });
 
@@ -44,74 +48,45 @@ class MyContracts extends Component{
             });
         } else {
             
-            const profRefs = database.ref('professors');
+            
             const searchword = database.ref('search');
-            await profRefs.on('value', snapshot => {
+            await contractsRefs.on('value', snapshot => {
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val();
-
+                    
                     if(childData.email_transportator === email) {
-                        profCoursesList.push.apply(profCoursesList, childData.courses);  
+                        console.log(childData);
+                        profCoursesList.push(childData);  
                     }
                 });
+                this.setState({ courses : profCoursesList, email: email });
             });
-            await clientsOfferRefs.on('value', snapshot => {
-                snapshot.forEach(childSnapshot => {
-                    const childData = childSnapshot.val();
-                    const nume = childData.name;
-                    coursesList.push(childData);
-                    
-                });
-
-                this.setState({ courses : coursesList, email: email  });
-            });
-            await searchword.on('value', snapshot => {
-                snapshot.forEach(childSnapshot => {
-                    const childData = childSnapshot.val();
-                    
-                    searchL = childData.searchWord;
-                    console.log( searchL);
-                    
-                });
-
-                this.setState({ searchTerm : searchL});
-            });
+            
         }
     }
     render(){
-        
         return(
             <div>
-                {   
+                {
                     this.state.courses.length ? 
-                    
                     (<div>
                         <div className="container-fluid d-flex justify-content-center">
-                            <div className="row" id="courses">stai o sec
+                            <div className="row" id="courses">
                                 {
-                                    this.state.courses.filter(val=> {
-                                         if(this.state.searchTerm ==" "){
-                                            return val 
-                                         }
-                                        else
-                                         if(val.email?.includes(this.state.searchTerm)){
-                                            //console.log(this.state.searchTerm.search);
-                                            return val
-                                        }
-                                    }).map(course => (
+                                    this.state.courses.map(course => (
                                         <div className="col-md-4">
-                                            <Card imgsrc={img1} course={course}/>
+                                            <Card2 imgsrc={img1} course={course}/>
                                         </div>
                                     ))
                                 }
                             </div>
                         </div>
-                    </div>)
-                    : 
                         
+                    </div>)
+                    :     
                     (<div className="card text-center shadow">
                         <div className="card-body text-dark">
-                            <h4 className="card-title">Nu exista oferte</h4>
+                            <h4 className="card-title">Nu sunteti inrolat inca la niciun curs</h4>
                             <p className="card-text text-secondary">
                                 Va rugam reveniti mai tarziu
                             </p>

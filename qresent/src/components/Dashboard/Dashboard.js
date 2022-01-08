@@ -92,7 +92,7 @@ class Dashboard extends Component{
                     (<div>
                         {!CheckIfUserIsStudent(this.state.email) && <SearchBar/>}
                         <div className="container-fluid d-flex justify-content-center">
-                            <div className="row" id="courses">stai o sec
+                            <div className="row" id="courses">
                                 {
                                     this.state.courses.filter(val=> {
                                          if(this.state.searchTerm ==" "){

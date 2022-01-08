@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
-import "./Subject.css";
+import "./Subject2.css";
 import { database, auth } from "../../firebase";
 import Popup from "../Popup/Popup";
 import { CheckIfUserIsStudent } from '../../utils/utils.js';
@@ -233,6 +233,10 @@ class Subject extends Component {
 
             <Link style={{textDecoration: "none", color: "#ffffff", width: "50%"}} to={{pathname: `/#`}}>
               <Button className="col-auto subject-button" variant="dark" onClick={(e) => this.addContract(e)}>Contract</Button>
+            </Link>
+
+            <Link style={{textDecoration: "none", color: "#ffffff", width: "50%"}} to={{pathname: '/ShowMap'}}>
+                  <Button className="col-md" variant="secondary">See where your package is!</Button>
             </Link>
             {
               !CheckIfUserIsStudent(this.state.email) &&
