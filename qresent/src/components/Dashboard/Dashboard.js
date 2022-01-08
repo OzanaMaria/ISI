@@ -6,6 +6,7 @@ import { database, auth } from "../../firebase";
 import './Dashboard.css'
 import { Link, useHistory } from "react-router-dom";
 import SearchBar from './SearchBar';
+import AddContract from './AddContract';
 
 class Dashboard extends Component{
     constructor(props) {
@@ -18,9 +19,11 @@ class Dashboard extends Component{
         }
     }
     
+    
     async componentDidMount() {
         let coursesList = [];
         const subjectsRefs = database.ref('transpOffer');
+        const contractsRefs = database.ref('contracte');
         const clientsOfferRefs = database.ref('materii');
         const email = auth.currentUser.email;
         let profCoursesList = [];
@@ -103,7 +106,7 @@ class Dashboard extends Component{
                                     }).map(course => (
                                         <div className="col-md-4">
                                             <Card imgsrc={img1} course={course}/>
-                                           
+                                            <button onClick={AddContract}>Press Me!</button>
                                         </div>
                                     ))
                                 }
