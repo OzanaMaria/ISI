@@ -11,7 +11,7 @@ const Card = props => {
       </div>
       
       <div className="card-body text-dark">
-        <h4 className="card-title">{ props.course.email }</h4>
+        <h4 className="card-title">{ props.course.id }</h4>
         <p className="card-text text-secondary">
           Titular curs: { props.course.email }
         </p>

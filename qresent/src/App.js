@@ -18,6 +18,7 @@ import StudentsManagement from "./components/Auth/Users/StudentsManagement";
 import TeachersManagement from "./components/Auth/Users/TeachersManagement";
 import Add from "./components/Dashboard/Add";
 import AddOffer from "./components/Dashboard/AddOffer";
+import MyContracts from "./components/MyContracts/MyContracts";
 function App() {
   
 
@@ -45,6 +46,7 @@ function App() {
                 <PrivateRoute exact path="/edit" component={EditProfile}/>
                 <PrivateRoute exact path="/addRequest" component={Add}/>
                 <PrivateRoute exact path="/addOffer" component={AddOffer}/>
+                <PrivateRoute exact path="/contracts" component={MyContracts}/>
               </Switch>
             </AuthProvider>
           </Router>

@@ -12,6 +12,7 @@ import { format } from "date-fns";
 
 const GENERATE_QR_OPTION = "GenerateQR";
 const STATISTICS_OPTION = "Statistics";
+let ver = false;
 class Subject extends Component {
   constructor(props) {
     super(props);
@@ -25,24 +26,45 @@ class Subject extends Component {
       attendance: []
     }
   }
-
+  
   togglePopupQr = (e, option) => {
     this.setState({ isOpen: !this.state.isOpen });
     this.setState({ time: Math.floor(new Date().getTime() / 1000) });
     this.setState({ optionChosen: option });
   }
 
+  addContract = (e) => {
+    // const refs = database.ref('contract');
+    // console.log(this.state.materieKey);
+    // refs.child(this.state.materieKey).push(this.state.email, this.state.currentCourse.arr_date);
+    ver = true;
+  }
+
   async componentDidMount() {
     const refs = database.ref('materii');
     const email = auth.currentUser.email;
-
+    const refscont = database.ref('contract');
     await refs.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
         const childData = childSnapshot.val();
-
+        console.log('prima' + childData.name);
+        console.log('doua' + this.props.name.params.id);
         if(childData.name === this.props.match.params.id) {
-          this.setState({ currentCourse : childData, email: email });
+          this.setState({ currentCourse : childData, email: email});
           this.setState({materieKey : childSnapshot.key});
+        }
+        if(ver){
+          refscont.push({'id':"Contract 1", 
+                        'email_client':childData.email, 
+                        'email_transportator':email, 
+                        'arr_date':childData.arr_date, 
+                        'dep_date':childData.dep_date, 
+                        'dep_place':childData.dep_place, 
+                        'max_arr_date':childData.max_arr_date,
+                        'max_dep_date':childData.max_dep_date});
+          
+          ver = false;
+          refs.child(childSnapshot.key).remove();
         }
       });
     });
@@ -207,6 +229,10 @@ class Subject extends Component {
                 }
               Statistici prezenta
             </Button>
+
+            <Link style={{textDecoration: "none", color: "#ffffff", width: "50%"}} to={{pathname: `/#`}}>
+              <Button className="col-auto subject-button" variant="dark" onClick={(e) => this.addContract(e)}>Contract</Button>
+            </Link>
             {
               !CheckIfUserIsStudent(this.state.email) &&
                   <PDFDownloadLink 
@@ -220,6 +246,7 @@ class Subject extends Component {
                   }
                   </PDFDownloadLink>
             }
+
           </div>
         </div>
       </div>

@@ -77,7 +77,6 @@ export default function SignUp() {
                                 <option>344C5</option>
                             </Form.Select>
                         </Form.Group>
-
                         <Form.Group id="password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required />

@@ -1,28 +1,25 @@
 import React, { Component} from 'react';
 import Card from '../Card/Card';
-import img1 from './react-logo.png';
+import img1 from '../Dashboard/react-logo.png';
 import { CheckIfUserIsStudent } from '../../utils/utils.js';
 import { database, auth } from "../../firebase";
-import './Dashboard.css'
+import '../Dashboard/Dashboard.css';
 import { Link, useHistory } from "react-router-dom";
-import SearchBar from './SearchBar';
-import AddContract from './AddContract';
 
-class Dashboard extends Component{
+class MyContracts extends Component{
     constructor(props) {
         super(props);
         this.state = {
             courses: [],
             email: "",
             searchTerm: "",
-            
         }
     }
     
     
     async componentDidMount() {
         let coursesList = [];
-        const subjectsRefs = database.ref('transpOffer');
+        const subjectsRefs = database.ref('contracte');
         const contractsRefs = database.ref('contracte');
         const clientsOfferRefs = database.ref('materii');
         const email = auth.currentUser.email;
@@ -53,7 +50,7 @@ class Dashboard extends Component{
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val();
 
-                    if(childData.email === email) {
+                    if(childData.email_transportator === email) {
                         profCoursesList.push.apply(profCoursesList, childData.courses);  
                     }
                 });
@@ -81,7 +78,6 @@ class Dashboard extends Component{
             });
         }
     }
-
     render(){
         
         return(
@@ -90,7 +86,6 @@ class Dashboard extends Component{
                     this.state.courses.length ? 
                     
                     (<div>
-                        {!CheckIfUserIsStudent(this.state.email) && <SearchBar/>}
                         <div className="container-fluid d-flex justify-content-center">
                             <div className="row" id="courses">stai o sec
                                 {
@@ -111,14 +106,10 @@ class Dashboard extends Component{
                                 }
                             </div>
                         </div>
-                        {CheckIfUserIsStudent(this.state.email) && <Link to="/addRequest">Add Transport Request</Link>}
-                        {!CheckIfUserIsStudent(this.state.email) && <Link to="/addOffer">Add Transport Offer</Link>}
                     </div>)
                     : 
                         
                     (<div className="card text-center shadow">
-                        {CheckIfUserIsStudent(this.state.email) && <Link to="/addRequest">Add Transport Request</Link>}
-                        {!CheckIfUserIsStudent(this.state.email) && <Link to="/addOffer">Add Transport Offer</Link>}
                         <div className="card-body text-dark">
                             <h4 className="card-title">Nu exista oferte</h4>
                             <p className="card-text text-secondary">
@@ -132,4 +123,4 @@ class Dashboard extends Component{
     }
 }
 
-export default Dashboard;
+export default MyContracts;

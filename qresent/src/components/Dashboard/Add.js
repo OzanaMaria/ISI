@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { database } from "../../firebase";
 import '../Auth/SignUp/SignUp.css';
 import Dashboard from "./Dashboard.js";
+import { id } from "date-fns/locale";
 
 export default function Add() {
     
@@ -34,7 +35,7 @@ export default function Add() {
             arr_place : arr_place.current.value,
             arr_date : arr_date.current.value,
             max_arr_date :max_arr_date.current.value,
-            
+            id :id.current.value
             
         }
         database.ref('materii').push(userData);
@@ -49,6 +50,10 @@ export default function Add() {
                     {error && <Alert variant="danger">{error}</Alert>}
 
                     <Form onSubmit={handleSubmit}>
+                    <Form.Group id="id">
+                            <Form.Label>Nume</Form.Label>
+                            <Form.Control type="id" ref={id} required />
+                        </Form.Group>
                     <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required />
@@ -60,7 +65,13 @@ export default function Add() {
 
                         <Form.Group id="dep_place">
                             <Form.Label>Departure Place</Form.Label>
-                            <Form.Control type="dep_place" ref={dep_place} required />
+                            <Form.Select ref={dep_place} required>
+                                <option>Select option</option>
+                                <option>Bucharest</option>
+                                <option>Cluj</option>
+                                <option>Brasov</option>
+                                <option>Iasi</option>
+                            </Form.Select>
                         </Form.Group>
 
                         <Form.Group id="max_dep_date">
@@ -69,7 +80,13 @@ export default function Add() {
                         </Form.Group>
                         <Form.Group id="arr_place">
                             <Form.Label>Arrival Place</Form.Label>
-                            <Form.Control type="arr_place" ref={arr_place} required />
+                            <Form.Select ref={arr_place} required>
+                                <option>Select option</option>
+                                <option>Bucharest</option>
+                                <option>Cluj</option>
+                                <option>Brasov</option>
+                                <option>Iasi</option>
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group id="arr_date">
                             <Form.Label>Arrival Date</Form.Label>
