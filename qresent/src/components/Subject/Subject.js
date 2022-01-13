@@ -42,8 +42,11 @@ class Subject extends Component {
 
   async componentDidMount() {
     const refs = database.ref('materii');
+    const refs2 = database.ref('transpOffer');
     const email = auth.currentUser.email;
     const refscont = database.ref('contract');
+    console.log(email);
+    if(!CheckIfUserIsStudent(email)){
     await refs.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
         const childData = childSnapshot.val();
@@ -55,7 +58,7 @@ class Subject extends Component {
         console.log(ver);
         if(ver){
           console.log(childSnapshot.key);
-          refscont.push({'id':"Contract 1", 
+          refscont.push({'id': childData.id,   
                         'email_client':childData.email, 
                         'email_transportator':email, 
                         'arr_date':childData.arr_date, 
@@ -66,10 +69,37 @@ class Subject extends Component {
           
           ver = false;
           refs.child(childSnapshot.key).remove();
+          console.log(email);
         }
       });
     });
+  }else{
+    await refs2.on('value', snapshot => {
+      snapshot.forEach(childSnapshot => {
+        const childData = childSnapshot.val();
 
+        if(childData.name === this.props.match.params.id) {
+          this.setState({ currentCourse : childData, email: email});
+          this.setState({materieKey : childSnapshot.key});
+        }
+        console.log(ver);
+        if(ver){
+          console.log(childSnapshot.key);
+          refscont.push({'id':childData.id, 
+                        'email_client':email, 
+                        'email_transportator':childData.email, 
+                        'arr_date':childData.arr_date, 
+                        'dep_date':childData.dep_date, 
+                        'dep_place':childData.dep_place, 
+                        'max_arr_date':childData.max_arr_date,
+                        'max_dep_date':childData.max_dep_date});
+          
+          ver = false;
+          refs2.child(childSnapshot.key).remove();
+        }
+      });
+    });
+  }
     this.interval = setInterval(
       () => this.setState({ time: Date.now() }),
       120000

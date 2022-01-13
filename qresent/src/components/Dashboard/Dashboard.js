@@ -7,19 +7,33 @@ import './Dashboard.css'
 import { Link, useHistory } from "react-router-dom";
 import SearchBar from './SearchBar';
 import AddContract from './AddContract';
+import { Form } from "react-bootstrap";
 
+let groupRef = 1;
+let group = "";
 class Dashboard extends Component{
     constructor(props) {
         super(props);
         this.state = {
             courses: [],
             email: "",
-            searchTerm: "",
+            searchTerm: ""
             
         }
     }
     
-    
+    async setVal(e){
+        if(e.target.value == 1){
+            groupRef = 1;
+        }
+        else if(e.target.value == 2){
+            groupRef = 2;
+        }
+        else if(e.target.value == 3){
+            groupRef = 3;
+        }
+    }
+
     async componentDidMount() {
         let coursesList = [];
         const subjectsRefs = database.ref('transpOffer');
@@ -83,7 +97,6 @@ class Dashboard extends Component{
     }
 
     render(){
-        
         return(
             <div>
                 {   
@@ -91,6 +104,15 @@ class Dashboard extends Component{
                     
                     (<div>
                         {!CheckIfUserIsStudent(this.state.email) && <SearchBar/>}
+                        <Form>
+                        <Form.Group id="group">
+                            <Form.Select ref={group} onChange={this.setVal} required>
+                                <option value = "1">email</option>
+                                <option value = "2">Arrival date</option>
+                                <option value = "3">Arrival place</option>
+                            </Form.Select>
+                        </Form.Group>
+                        </Form>
                         <div className="container-fluid d-flex justify-content-center">
                             <div className="row" id="courses">
                                 {
@@ -98,10 +120,23 @@ class Dashboard extends Component{
                                          if(this.state.searchTerm ==" "){
                                             return val 
                                          }
-                                        else
-                                         if(val.email?.includes(this.state.searchTerm)){
-                                            //console.log(this.state.searchTerm.search);
-                                            return val
+                                        else{
+                                            if(groupRef == 1){
+                                                if(val.email?.includes(this.state.searchTerm)){
+                                                    //console.log(this.state.searchTerm.search);
+                                                    return val
+                                                }
+                                            }else if(groupRef == 2){
+                                                if(val.arr_date?.includes(this.state.searchTerm)){
+                                                    //console.log(this.state.searchTerm.search);
+                                                    return val
+                                                }
+                                            }else if(groupRef == 3){
+                                                if(val.arr_place?.includes(this.state.searchTerm)){
+                                                    //console.log(this.state.searchTerm.search);
+                                                    return val
+                                                }
+                                            }
                                         }
                                     }).map(course => (
                                         <div className="col-md-4">
