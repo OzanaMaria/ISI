@@ -9,6 +9,7 @@ import AttendancePDF from "../AttendancePDF/AttendancePDF.js";
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import EditProfile from "./EditProfile";
 import { format } from "date-fns";
+import { useAlert } from 'react-alert'
 
 const GENERATE_QR_OPTION = "GenerateQR";
 const STATISTICS_OPTION = "Statistics";
@@ -38,6 +39,13 @@ class Subject extends Component {
     // console.log(this.state.materieKey);
     // refs.child(this.state.materieKey).push(this.state.email, this.state.currentCourse.arr_date);
     ver = true;
+  }
+
+  calcPrice = (e) => {
+    // const refs = database.ref('contract');
+    // console.log(this.state.materieKey);
+    // refs.child(this.state.materieKey).push(this.state.email, this.state.currentCourse.arr_date);
+    alert('You are inside the price range!')
   }
 
   async componentDidMount() {
@@ -106,10 +114,6 @@ class Subject extends Component {
    
   }
 
-  
- 
-  
-
   render() {
     let keys;
 
@@ -163,6 +167,8 @@ class Subject extends Component {
               <Button className="col-auto subject-button" variant="dark" onClick={(e) => this.addContract(e)}>Contract</Button>
             </Link>
             
+            <Button className="col-auto subject-button" variant="dark" onClick={(e) => this.calcPrice(e)}>Price</Button>
+
           </div>
         </div>
 
