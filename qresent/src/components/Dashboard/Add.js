@@ -19,6 +19,7 @@ export default function Add() {
     const arr_place = useRef();
     let arr_date;
     let max_arr_date;
+    const material = useRef("");
     
     const emailRef = useRef();
     const [error, setError] = useState("");
@@ -39,12 +40,22 @@ export default function Add() {
             arr_place : arr_place.current.value,
             arr_date : arr_date,
             max_arr_date :max_arr_date,
-            id :id.current.value
+            id :id.current.value,
+            material : material.current.value,
             
         });
     
     }
-    
+    let materialsList = [];
+    let materialsNameList = [];
+    const materialsRefs = database.ref('materials');
+
+    materialsRefs.on('value', snapshot => {
+        snapshot.forEach(childSnapshot => {
+            const childData = childSnapshot.val();
+            materialsNameList.push(childData);
+        });
+    }); 
     return (
         
         <>
@@ -101,7 +112,13 @@ export default function Add() {
                             <Form.Label>Maximum Arrival Date</Form.Label>
                             <DatePicker type="max_arr_date" selected={maxArrDate} dateFormat="dd-MM-yyyy" onChange={(date) => setmaxArrDate(date)}  />
                         </Form.Group>
-                        
+                        <Form.Group id="material">
+                            <Form.Label>Material</Form.Label>
+                            <Form.Select ref={material} required>
+                                <option>Select option</option>
+                                {materialsNameList.map((val) => <option value={val.name}>{val.name}</option>)}
+                            </Form.Select>
+                        </Form.Group>
                         <Button onClick = {history.goBack} disabled={loading} className="w-100 auth-button" type="submit">
                             Submit request!
                         </Button>
