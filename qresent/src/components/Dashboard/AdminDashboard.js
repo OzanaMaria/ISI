@@ -3,13 +3,15 @@ import Table from './Table.js';
 import { database } from "../../firebase";
 import { Link } from "react-router-dom";
 import { Tab, Tabs } from 'react-bootstrap';
+import Table2 from './Table2.js';
 
 class AdminDashboard extends Component{
     constructor(props) {
         super(props);
         this.state = {
             studentList: [],
-            teachersList: []
+            teachersList: [],
+            materialsList: []
         }
     }
 
@@ -18,7 +20,8 @@ class AdminDashboard extends Component{
         const teachersRefs = database.ref('professors');
         let studentNameList = [];
         const studentRefs = database.ref('students');
-
+        let materialsNameList = [];
+        const materialsRefs = database.ref('materials');
         await studentRefs.on('value', snapshot => {
             snapshot.forEach(childSnapshot => {
                 const childData = childSnapshot.val();
@@ -34,6 +37,14 @@ class AdminDashboard extends Component{
             });
             this.setState({ teachersList : teachersNameList});
         }); 
+
+        await materialsRefs.on('value', snapshot => {
+            snapshot.forEach(childSnapshot => {
+                const childData = childSnapshot.val();
+                materialsNameList.push(childData);
+            });
+            this.setState({ materialsList : materialsNameList});
+        }); 
     }
 
     render(){
@@ -43,6 +54,7 @@ class AdminDashboard extends Component{
                     <div className="row">
                         <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addStudent"}}> Add student </Link>
                         <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addTeacher"}}> Add teacher </Link>
+                        <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addMaterial"}}> Add material </Link>
                     </div>
             </div>  
             <div className="container mt-5">
@@ -83,6 +95,24 @@ class AdminDashboard extends Component{
                         {
                             this.state.teachersList.map(student => (
                                 <Table student={student}/>
+                            ))
+                        }
+                    </tbody>
+                    </table>
+                }
+                </Tab>
+                <Tab eventKey="materials" title="Materials">
+                    {this.state.materialsList.length &&
+                    
+                    <table className="table" > 
+                    <thead style={{backgroundColor: "rgba(33, 37, 41)", color: "white"}}>
+                        <th></th>
+                        <th scope="col">Nume</th>
+                    </thead>
+                    <tbody>
+                        {
+                            this.state.materialsList.map(student => (
+                                <Table2 student={student}/>
                             ))
                         }
                     </tbody>

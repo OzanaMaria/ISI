@@ -17,6 +17,7 @@ import UpdateUser from "./components/Dashboard/UpdateUser";
 import EditProfile from "./components/Subject/EditProfile";
 import StudentsManagement from "./components/Auth/Users/StudentsManagement";
 import TeachersManagement from "./components/Auth/Users/TeachersManagement";
+import MaterialsManagement from "./components/Auth/Users/MaterialsManagement";
 import Add from "./components/Dashboard/Add";
 import AddOffer from "./components/Dashboard/AddOffer";
 import MyContracts from "./components/MyContracts/MyContracts";
@@ -39,6 +40,7 @@ function App() {
                 <PrivateRoute exact path="/admin/:user" component={UpdateUser}/>
                 <PrivateRoute exact path="/addStudent" component={StudentsManagement}/>
                 <PrivateRoute exact path="/addTeacher" component={TeachersManagement}/>
+                <PrivateRoute exact path="/addMaterial" component={MaterialsManagement}/>
                 <Route exact path="/signup" component={Signup} />
                 <Route exact path="/login" component={Login} />
                 <PrivateRoute exact path="/subject/:id" component={Subject}/>
