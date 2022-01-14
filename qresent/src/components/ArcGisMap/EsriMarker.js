@@ -11,70 +11,50 @@ class EsriMarker extends React.Component {
   }
 
   renderMarker() {
+    loadModules([
+      "esri/layers/GraphicsLayer",
+      "esri/Graphic",
+      "esri/geometry/Point",
+      "esri/PopupTemplate"
+    ]).then(([GraphicsLayer, Graphic, Point, PopupTemplate]) => {
 
-    loadModules(["esri/Map","esri/layers/FeatureLayer", "esri/views/MapView","esri/widgets/Legend"])
-    .then(([Map, FeatureLayer, MapView, Legend]) => {
-      const map = new Map({
-        basemap: "gray-vector"
+      const markerLayer = new GraphicsLayer();
+      this.props.markers.forEach((marker) => {
+        const point = new Point({
+          longitude: marker.position.lng,
+          latitude: marker.position.lat
+        });
+
+        const markerSymbol = {
+          type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+          url: "http://nobacks.com/wp-content/uploads/2014/11/Glass-of-Beer-8.png",
+          width: "142px",
+          height: "167px"
+        };
+
+        const theAtt = {
+          Name: "some name",
+          Owner: "some Owner",
+          Length: "some lengthß"
+        };
+
+        const pop = new PopupTemplate({
+          title: "pop title",
+          content: '<div className="info">ID: someID ' + '<br/><span>ZONE: someZone </span>'
+        });
+
+        const graphic = new Graphic({
+          geometry: point,
+          symbol: markerSymbol,
+          attributes: theAtt,
+          popupTemplate: pop
+        });
+
+        markerLayer.add(graphic);
       });
 
-      // Create the MapView
-      const view = new MapView({
-        container: "viewDiv",
-        map: map,
-        center: [44.439663, 26.096306],
-        zoom: 10
-      });
-      view.ui.add(new Legend({ view: view }), "bottom-left");
-    const template = {
-      title : "{Name}",
-      content: [
-        {
-          // It is also possible to set the fieldInfos outside of the content
-          // directly in the popupTemplate. If no fieldInfos is specifically set
-          // in the content, it defaults to whatever may be set within the popupTemplate.
-          type: "fields",
-          fieldInfos: [
-            {
-              fieldName: "B12001_calc_pctMarriedE",
-              label: "Married %"
-            },
-            {
-              fieldName: "B12001_calc_numMarriedE",
-              label: "People Married",
-              format: {
-                digitSeparator: true,
-                places: 0
-              }
-            },
-            {
-              fieldName: "B12001_calc_numNeverE",
-              label: "People that Never Married",
-              format: {
-                digitSeparator: true,
-                places: 0
-              }
-            },
-            {
-              fieldName: "B12001_calc_numDivorcedE",
-              label: "People Divorced",
-              format: {
-                digitSeparator: true,
-                places: 0
-              }
-            }
-          ]
-        }
-      ]
-    };
-
-    const featureLayer = new FeatureLayer({
-      url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Marital_Status_Boundaries/FeatureServer/2",
-      popupTemplate: template
-    });
-    console.log("aici");
-    map.add(featureLayer);  
+      this.props.map.add(markerLayer);
     }).catch((err) => console.error(err));
-}
+  }
 }
 export default EsriMarker;

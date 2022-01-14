@@ -52,22 +52,20 @@ class AdminDashboard extends Component{
             <> 
             <div className="container buttons-section users-management">
                     <div className="row">
-                        <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addStudent"}}> Add student </Link>
-                        <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addTeacher"}}> Add teacher </Link>
+                        <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addStudent"}}> Add client </Link>
+                        <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addTeacher"}}> Add transporter </Link>
                         <Link className="btn btn-outline-success col-md mr-5 ml-6" to={{pathname: "/addMaterial"}}> Add material </Link>
                     </div>
             </div>  
             <div className="container mt-5">
             <Tabs defaultActiveKey="students" id="uncontrolled-tab-example" className="mb-3">
-                <Tab eventKey="students" title="Students">
+                <Tab eventKey="students" title="Clients">
                     {this.state.studentList.length &&
                         <table className="table" > 
                         <thead style={{backgroundColor: "rgba(33, 37, 41)", color: "white"}}>
                             <th></th>
                             <th scope="col">Nume</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Cursuri</th>
-                            <th scope="col">Grupa</th>
                             <th scope="col">Operatii tabel</th>
                         </thead>
                         <tbody>
@@ -80,7 +78,7 @@ class AdminDashboard extends Component{
                         </table>
                     }
                 </Tab>
-                <Tab eventKey="teachers" title="Teachers">
+                <Tab eventKey="teachers" title="Transporters">
                     {this.state.teachersList.length &&
                     
                     <table className="table" > 
@@ -88,7 +86,6 @@ class AdminDashboard extends Component{
                         <th></th>
                         <th scope="col">Nume</th>
                         <th scope="col">Email</th>
-                        <th scope="col">Cursuri</th>
                         <th scope="col">Operatii tabel</th>
                     </thead>
                     <tbody>

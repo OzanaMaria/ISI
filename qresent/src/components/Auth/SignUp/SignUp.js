@@ -23,7 +23,6 @@ export default function SignUp() {
         const userData = {
             name: nameRef.current.value,
             email: emailRef.current.value,
-            group: groupRef.current.value,
             moodle_account: userRef.current.value
         }
         database.ref('students').push(userData);
@@ -63,20 +62,10 @@ export default function SignUp() {
                         </Form.Group>
 
                         <Form.Group id="user">
-                            <Form.Label>User Moodle</Form.Label>
+                            <Form.Label>User</Form.Label>
                             <Form.Control type="user" ref={userRef} required />
                         </Form.Group>
 
-                        <Form.Group id="group">
-                            <Form.Label>Group</Form.Label>
-                            <Form.Select ref={groupRef} required>
-                                <option>Select option</option>
-                                <option>341C5</option>
-                                <option>342C5</option>
-                                <option>343C5</option>
-                                <option>344C5</option>
-                            </Form.Select>
-                        </Form.Group>
                         <Form.Group id="password">
                             <Form.Label>Password</Form.Label>
                             <Form.Control type="password" ref={passwordRef} required />
