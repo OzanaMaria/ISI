@@ -6,43 +6,47 @@ import { database } from "../../firebase";
 import '../Auth/SignUp/SignUp.css';
 import Dashboard from "./Dashboard.js";
 import { id } from "date-fns/locale";
-
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 export default function Add() {
-    
-    const dep_date = useRef();
+    const [deptDate, setStartDate] = useState();
+    const [maxDeptDate, setmaxDeptDate] = useState();
+    const [arrDate, setarrDate] = useState();
+    const [maxArrDate, setmaxArrDate] = useState();
+    let dep_date ;
     const dep_place = useRef();
-    const max_dep_date = useRef();
+    let max_dep_date;
     const arr_place = useRef();
-    const arr_date = useRef();
-    const max_arr_date = useRef();
+    let arr_date;
+    let max_arr_date;
     
     const emailRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
-    const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
 
     async function handleSubmit(e) {
         e.preventDefault()
-
-        const userData = {
+        {dep_date = JSON.stringify(deptDate).substring(1,11)}
+        {max_dep_date = JSON.stringify(maxDeptDate).substring(1,11)}
+        {arr_date = JSON.stringify(arrDate).substring(1,11)}
+        {max_arr_date = JSON.stringify(maxArrDate).substring(1,11)}
+        database.ref('materii').push({
             email: emailRef.current.value,
-            dep_date: dep_date.current.value,
+            dep_date:  dep_date,
             dep_place: dep_place.current.value,
-            max_dep_date : max_dep_date.current.value,
+            max_dep_date : max_dep_date,
             arr_place : arr_place.current.value,
-            arr_date : arr_date.current.value,
-            max_arr_date :max_arr_date.current.value,
+            arr_date : arr_date,
+            max_arr_date :max_arr_date,
             id :id.current.value
             
-        }
-        database.ref('materii').push(userData);
+        });
     
     }
-
+    
     return (
+        
         <>
             <Card id='card-container-signup'>
                 <Card.Body>
@@ -60,7 +64,8 @@ export default function Add() {
                         </Form.Group>
                         <Form.Group id="dep_date">
                             <Form.Label>Departure Date</Form.Label>
-                            <Form.Control type="dep_date" ref={dep_date} required />
+                            <DatePicker type="dep_date" selected={deptDate} dateFormat="dd-MM-yyyy" onChange={(date) => setStartDate(date)}  />
+                            
                         </Form.Group>
 
                         <Form.Group id="dep_place">
@@ -76,7 +81,7 @@ export default function Add() {
 
                         <Form.Group id="max_dep_date">
                             <Form.Label>Maximum Departure Date</Form.Label>
-                            <Form.Control type="max_dep_date" ref={max_dep_date} required />
+                            <DatePicker type="max_dep_date" selected={maxDeptDate} dateFormat="dd-MM-yyyy" onChange={(date) => setmaxDeptDate(date)}  />
                         </Form.Group>
                         <Form.Group id="arr_place">
                             <Form.Label>Arrival Place</Form.Label>
@@ -90,11 +95,11 @@ export default function Add() {
                         </Form.Group>
                         <Form.Group id="arr_date">
                             <Form.Label>Arrival Date</Form.Label>
-                            <Form.Control type="arr_date" ref={arr_date} required />
+                            <DatePicker type="arr_date" selected={arrDate} dateFormat="dd-MM-yyyy" onChange={(date) => setarrDate(date)}  />
                         </Form.Group>
                         <Form.Group id="max_arr_date">
                             <Form.Label>Maximum Arrival Date</Form.Label>
-                            <Form.Control type="max_arr_date" ref={max_arr_date} required />
+                            <DatePicker type="max_arr_date" selected={maxArrDate} dateFormat="dd-MM-yyyy" onChange={(date) => setmaxArrDate(date)}  />
                         </Form.Group>
                         
                         <Button onClick = {history.goBack} disabled={loading} className="w-100 auth-button" type="submit">
