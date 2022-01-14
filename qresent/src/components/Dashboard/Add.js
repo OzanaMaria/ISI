@@ -54,6 +54,7 @@ export default function Add() {
         snapshot.forEach(childSnapshot => {
             const childData = childSnapshot.val();
             materialsNameList.push(childData);
+            console.log(childData);
         });
     }); 
     return (

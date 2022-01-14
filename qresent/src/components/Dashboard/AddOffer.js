@@ -24,6 +24,7 @@ export default function AddOffer() {
     const dep_place = useRef();
     const arr_place = useRef();
     const material = useRef("");
+    
     const trucktype = useRef();
     const volume = useRef();
     const gauge = useRef();
@@ -31,9 +32,6 @@ export default function AddOffer() {
     const priceperkm = useRef();
     
     const emailRef = useRef();
-    const passwordRef = useRef();
-    const passwordConfirmRef = useRef();
-    const { signup } = useAuth();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -80,7 +78,17 @@ export default function AddOffer() {
             materialsNameList.push(childData);
         });
     }); 
+    
+    let trucksNameList = [];
+    const trucksRefs = database.ref('trucks');
 
+    trucksRefs.on('value', snapshot => {
+        snapshot.forEach(childSnapshot => {
+            const childData = childSnapshot.val();
+            console.log(childData);
+            trucksNameList.push(childData);
+        });
+    }); 
     return (
         <>
             <Card id='card-container-signup'>
@@ -137,7 +145,10 @@ export default function AddOffer() {
                         </Form.Group>
                         <Form.Group id="trucktype">
                             <Form.Label>Truck type</Form.Label>
-                            <Form.Control type="trucktype" ref={trucktype} required />
+                            <Form.Select ref={trucktype} required>
+                                <option>Select option</option>
+                                {trucksNameList.map((val) => <option value={val.trucktype}>{val.trucktype}</option>)}
+                            </Form.Select>
                         </Form.Group>
                         <Form.Group id="volume">
                             <Form.Label>Volume</Form.Label>

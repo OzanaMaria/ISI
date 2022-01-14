@@ -148,12 +148,14 @@ class Dashboard extends Component{
                         </div>
                         {CheckIfUserIsStudent(this.state.email) && <Link to="/addRequest">Add Transport Request</Link>}
                         {!CheckIfUserIsStudent(this.state.email) && <Link to="/addOffer">Add Transport Offer</Link>}
+                        {!CheckIfUserIsStudent(this.state.email) && <Link to="/addTruck">Add Truck</Link>}
                     </div>)
                     : 
                         
                     (<div className="card text-center shadow">
                         {CheckIfUserIsStudent(this.state.email) && <Link to="/addRequest">Add Transport Request</Link>}
                         {!CheckIfUserIsStudent(this.state.email) && <Link to="/addOffer">Add Transport Offer</Link>}
+                        {!CheckIfUserIsStudent(this.state.email) && <Link to="/addTruck">Add Truck</Link>}
                         <div className="card-body text-dark">
                             <h4 className="card-title">Nu exista oferte</h4>
                             <p className="card-text text-secondary">

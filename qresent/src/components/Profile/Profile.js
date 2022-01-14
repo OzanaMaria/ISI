@@ -78,27 +78,10 @@ class Profile extends Component {
                                     </div>
                                     <div class="col-sm-8">
                                         <div class="card-block">
-                                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">University</h6>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <p class="m-b-10 f-w-600">University Politehnica of Bucharest</p>
-                                                    <h6 class="text-muted f-w-400">Faculty of Automatic Control and Compter Science</h6>
-                                                </div>
-                                    
-                                            </div>
 
                                             <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Information</h6>
                                             <div class="row">
-                                                {(() => {  
-                                                    if (CheckIfUserIsStudent(auth.currentUser.email)) {
-                                                        return (
-                                                            <div class="col-sm-6">
-                                                                <p class="m-b-10 f-w-600">Group</p>
-                                                                <h6 class="text-muted f-w-400">{this.state.currentUser["group"]}</h6>
-                                                            </div>
-                                                        )
-                                                    } 
-                                                })()}
+
                                                 <div class="row">
                                                     <div class="col-sm-12">
                                                         <p class="m-b-10 f-w-600">Email</p>

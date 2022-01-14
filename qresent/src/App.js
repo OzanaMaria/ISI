@@ -22,6 +22,7 @@ import Add from "./components/Dashboard/Add";
 import AddOffer from "./components/Dashboard/AddOffer";
 import MyContracts from "./components/MyContracts/MyContracts";
 import ShowMap from "./components/ArcGisMap/ShowMap";
+import AddTruck from "./components/Dashboard/AddTruck";
 function App() {
   
 
@@ -51,6 +52,7 @@ function App() {
                 <PrivateRoute exact path="/edit" component={EditProfile}/>
                 <PrivateRoute exact path="/addRequest" component={Add}/>
                 <PrivateRoute exact path="/addOffer" component={AddOffer}/>
+                <PrivateRoute exact path="/addTruck" component={AddTruck}/>
                 <PrivateRoute exact path="/contracts" component={MyContracts}/>
                 <PrivateRoute exact path="/ShowMap" component={ShowMap}/>
               </Switch>
