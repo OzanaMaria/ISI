@@ -63,13 +63,13 @@ class Profile extends Component {
                                                 if (CheckIfUserIsStudent(auth.currentUser.email)) {
                                                     return (
                                                         <div>
-                                                            <p>Student</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                                            <p>Client</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                                         </div>
                                                     )
                                                 } else {
                                                     return (
                                                         <div>
-                                                            <p>Profesor</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
+                                                            <p>Transporter</p> <i class=" mdi mdi-square-edit-outline feather icon-edit m-t-10 f-16"></i>
                                                         </div>
                                                     )
                                                 }

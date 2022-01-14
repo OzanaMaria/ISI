@@ -51,7 +51,7 @@ class Subject extends Component {
       snapshot.forEach(childSnapshot => {
         const childData = childSnapshot.val();
 
-        if(childData.name === this.props.match.params.id) {
+        if(childData.id === this.props.match.params.id) {
           this.setState({ currentCourse : childData, email: email});
           this.setState({materieKey : childSnapshot.key});
         }
@@ -60,8 +60,9 @@ class Subject extends Component {
           console.log(childSnapshot.key);
           refscont.push({'id': childData.id,   
                         'email_client':childData.email, 
-                        'email_transportator':email, 
-                        'arr_date':childData.arr_date, 
+                        'email_transportator':email,
+                        'arr_date':childData.arr_date,
+                        'arr_place':childData.arr_place,
                         'dep_date':childData.dep_date, 
                         'dep_place':childData.dep_place, 
                         'max_arr_date':childData.max_arr_date,
@@ -69,7 +70,7 @@ class Subject extends Component {
           
           ver = false;
           refs.child(childSnapshot.key).remove();
-          console.log(email);
+          
         }
       });
     });
@@ -77,18 +78,20 @@ class Subject extends Component {
     await refs2.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
         const childData = childSnapshot.val();
-
-        if(childData.name === this.props.match.params.id) {
+       // console.log(childData.id);
+        console.log(this.props.match.params.id);
+        if(childData.id === this.props.match.params.id) {
           this.setState({ currentCourse : childData, email: email});
           this.setState({materieKey : childSnapshot.key});
         }
-        console.log(ver);
+        console.log( childData);
         if(ver){
           console.log(childSnapshot.key);
           refscont.push({'id':childData.id, 
                         'email_client':email, 
                         'email_transportator':childData.email, 
-                        'arr_date':childData.arr_date, 
+                        'arr_date':childData.arr_date,
+                        'arr_place':childData.arr_place, 
                         'dep_date':childData.dep_date, 
                         'dep_place':childData.dep_place, 
                         'max_arr_date':childData.max_arr_date,
@@ -100,64 +103,12 @@ class Subject extends Component {
       });
     });
   }
-    this.interval = setInterval(
-      () => this.setState({ time: Date.now() }),
-      120000
-    );
-
-    this.exportAttendance();
+   
   }
 
-  componentWillUnmount() {
-    clearInterval(this.interval);
-  }
-
-  updateInfo() {
-    database.ref('materii').child('-MnQPdcSCdce2rc9jtoj').update({'name': 'APD....'})
-  }
-
-  getParsedDate(strDate){
-    var date = new Date(strDate);
-    var formattedDate = format(date, "MMMM do yyyy");
-
-    return formattedDate;
-  }
-
-  exportAttendance(){
-    this.setState({attendance : []})
-    database
-      .ref('attendance/')
-      .once('value')
-      .then(snapshot => {
-          snapshot.forEach((child) => {
-              let dict = child.val()
-              if (dict["course"] == this.state.currentCourse.name && this.getParsedDate(dict["time"]) == this.getParsedDate(new Date()).toString()){
-                this.setState({attendance: this.state.attendance.concat(dict)})
-              }
-          });
-      });
-
-    return this.state.attendance;
-  }
-
-  edit_button = (key) => {
-    const edit_button = document.getElementById(key);
-    console.log(edit_button);
-    const txt = document.getElementById(key + 'text');
-
-    txt.contentEditable = true;
-    txt.style.backgroundColor = "#dddbdb";
-  }
-
-  done_button = (key) => {
-    const txt = document.getElementById(key + 'text');
-    const done_button = document.getElementById(key + 'done');
-
-    txt.contentEditable = false;
-    txt.style.backgroundColor = "#ffe44d";
-
-    database.ref('materii').child(this.state.materieKey).child('scores').update({[key]: txt.innerText});
-  }
+  
+ 
+  
 
   render() {
     let keys;
@@ -172,111 +123,51 @@ class Subject extends Component {
           <div className="row" id="descriptionSubject">
             <div className="col-md-8">
               <div className="row">
-                <h3>Informatii generale pentru materia {this.state.currentCourse.name}</h3>
+                <h3>Oferta {this.state.currentCourse.id}</h3>
                 <div>
                   {this.state.currentCourse.general_info}
-                  {!CheckIfUserIsStudent(this.state.email) && <EditProfile></EditProfile>}
                 </div>
               </div>
 
               <div className="row">
-                <h3>Evaluare pe parcurs</h3>
+                <h3>Informatii generale</h3>
                 <div>
-                  {!CheckIfUserIsStudent(this.state.email) &&
-                    keys && 
-                    keys.map(key => {
-                        return <li className="list-element">
-                              <span className="col-auto">{key}</span>
-                              <span className="col-auto score-value" id={key + 'text'}>{this.state.currentCourse.scores[key]} </span> 
-                              <Button className="col-auto subject-button" variant="dark" onClick={() => this.edit_button(key)} id={key}>Edit</Button>
-                              <Button className="col-auto subject-button" variant="dark" onClick={() => this.done_button(key)} id={key + "done"}>Done</Button>
-                          </li>
-                    })
-                  }
-                  {CheckIfUserIsStudent(this.state.email) &&
-                    keys && 
-                    keys.map(key => {
-                      return <li> {key}: {this.state.currentCourse.scores[key]} </li>
-                    })
-                  }
+                Email : {this.state.email}
                 </div>
+                <div>
+                Arrival Date : {this.state.currentCourse.arr_date}
+                </div>
+                <div>
+                Arrival Place : {this.state.currentCourse.arr_place}
+                </div>
+                <div>
+                Maxim Arrival Date : {this.state.currentCourse.max_arr_date}
+                </div>
+                <div>
+                Departure Date : {this.state.currentCourse.dep_date}
+                </div>
+                <div>
+                Departure Place : {this.state.currentCourse.dep_place}
+                </div>
+                <div>
+                Maxim Departure Date : {this.state.currentCourse.max_dep_date}
+                </div>
+                
               </div>
             </div>
-
-            <div className="col-md-4">
-              <h3>Orar</h3> 
-              <table>
-                <tr>
-                  <th>Zi</th>
-                  <th>Interval</th>
-                  <th>Asistent</th>
-                  <th>Sala</th>
-                </tr>
-                {
-                  this.state.currentCourse.schedule &&
-                  this.state.currentCourse.schedule.map((element) => {
-                    return <tr>
-                        <td>{element["zi"]}</td>
-                        <td>{element["interval"]}</td>
-                        <td>{element["asistent"]}</td>
-                        <td>{element["sala"]}</td>
-                      </tr>
-                  })
-                  
-                }
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <div className="container buttons-section">
+            <div className="container buttons-section">
           <div className="row">
-            {CheckIfUserIsStudent(this.state.email) ?
-                <Link style={{textDecoration: "none", color: "#ffffff", width: "50%"}} to={{pathname: `/scanqr`}}>
-                  <Button className="col-md" variant="secondary">Scan QR code</Button>
-                </Link>
-              :
-              <Button className="col-md" variant="secondary" onClick={(e) => this.togglePopupQr(e, GENERATE_QR_OPTION)}>
-                { this.state.optionChosen == GENERATE_QR_OPTION && this.state.isOpen && (
-                  <Popup 
-                    handleClose={this.togglePopupQr} 
-                    time={this.state.time} 
-                    course={this.state.currentCourse.name}
-                    button={GENERATE_QR_OPTION}/>
-                )}
-                Generate QR code
-              </Button>
-            }
-            <Button className="col-md" variant="secondary" onClick={(e) => this.togglePopupQr(e, STATISTICS_OPTION)}>
-                { this.state.optionChosen == STATISTICS_OPTION && this.state.isOpen && 
-                  (
-                    <Popup 
-                      handleClose={this.togglePopupQr}
-                      time={this.state.time} 
-                      course={this.state.currentCourse.name} 
-                      button={STATISTICS_OPTION}
-                    />
-                  )
-                }
-              Statistici prezenta
-            </Button>
+           
 
             <Link style={{textDecoration: "none", color: "#ffffff", width: "50%"}} to={{pathname: `/#`}}>
               <Button className="col-auto subject-button" variant="dark" onClick={(e) => this.addContract(e)}>Contract</Button>
             </Link>
-            {
-              !CheckIfUserIsStudent(this.state.email) &&
-                  <PDFDownloadLink 
-                    document={<AttendancePDF data={this.state.attendance}/>} 
-                    fileName="Prezenta.pdf" 
-                    className="pdf-download" style={{width: "33%"}}>
-                  {({ blob, url, loading, error }) =>
-                    loading ? 
-                    <Button className="col-md" variant="secondary" style={{width: "33%"}}>'Loading document...'</Button> : 
-                    <Button className="col-md" variant="secondary">Exporta Lista</Button>
-                  }
-                  </PDFDownloadLink>
-            }
+            
+          </div>
+        </div>
+
+        
+           
 
           </div>
         </div>
