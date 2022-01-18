@@ -15,6 +15,7 @@ export default function AddOffer() {
     const [maxDeptDate, setmaxDeptDate] = useState();
     const [arrDate, setarrDate] = useState();
     const [maxArrDate, setmaxArrDate] = useState();
+    const { currentUser, logout } = useAuth();
 
     let dep_date ;
     let max_dep_date;
@@ -62,9 +63,7 @@ export default function AddOffer() {
             
         }
         
-        console.log("material" + material.current.value);
         database.ref('transpOffer').push(userData);
-        console.log("material" + material.current.value);
     
     }
 
@@ -85,8 +84,8 @@ export default function AddOffer() {
     trucksRefs.on('value', snapshot => {
         snapshot.forEach(childSnapshot => {
             const childData = childSnapshot.val();
-            console.log(childData);
-            trucksNameList.push(childData);
+            if(childData.email == currentUser.email)
+                trucksNameList.push(childData);
         });
     }); 
     return (
@@ -144,10 +143,10 @@ export default function AddOffer() {
                             <DatePicker type="max_arr_date" selected={maxArrDate} dateFormat="dd-MM-yyyy" onChange={(date) => setmaxArrDate(date)}  />
                         </Form.Group>
                         <Form.Group id="trucktype">
-                            <Form.Label>Truck type</Form.Label>
+                            <Form.Label>Truck</Form.Label>
                             <Form.Select ref={trucktype} required>
                                 <option>Select option</option>
-                                {trucksNameList.map((val) => <option value={val.trucktype}>{val.trucktype}</option>)}
+                                {trucksNameList.map((val) => <option value={val.name}>{val.name}</option>)}
                             </Form.Select>
                         </Form.Group>
                         <Form.Group id="volume">

@@ -14,6 +14,7 @@ export default function AddOffer() {
     const status = useRef();
     const trucktype = useRef();
     const emailRef = useRef();
+    const nameRef = useRef();
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -22,6 +23,7 @@ export default function AddOffer() {
         e.preventDefault()
 
         const userData = {
+            name: nameRef.current.value,
             email: emailRef.current.value,
             trucktype : trucktype.current.value,
             status : status.current.value,
@@ -38,6 +40,10 @@ export default function AddOffer() {
                     {error && <Alert variant="danger">{error}</Alert>}
 
                     <Form onSubmit={handleSubmit}>
+                    <Form.Group id="name">
+                            <Form.Label>Name</Form.Label>
+                            <Form.Control type="name" ref={nameRef} required />
+                        </Form.Group>
                     <Form.Group id="email">
                             <Form.Label>Email</Form.Label>
                             <Form.Control type="email" ref={emailRef} required />

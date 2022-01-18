@@ -14,9 +14,9 @@ class ShowMap extends React.Component {
 
       viewProperties={{
 
-          center: [172.58804957425, -43.5106019527023],
+          center: [26.096306, 44.439663],
 
-          zoom: 25
+          zoom: 7
 
       }}>
 
