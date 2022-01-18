@@ -23,12 +23,6 @@ const BermudaTriangle = (props) => {
                     width: 1
                 }
             };
-            const markerSymbol = {
-                type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-                url: "http://nobacks.com/wp-content/uploads/2014/11/Glass-of-Beer-8.png",
-                width: "142px",
-                height: "167px"
-              };
               const theAtt = {
                 Name: "some name",
                 Owner: "some Owner",

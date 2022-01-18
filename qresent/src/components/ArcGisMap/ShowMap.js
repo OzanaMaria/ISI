@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { Scene } from 'react-arcgis';
+import {Map} from 'react-arcgis';
 import BermudaTriangle from './BermudaTriangle';
 import MyFeatureLayer from './MyFeatureLayer';
 class ShowMap extends React.Component {
@@ -10,7 +11,7 @@ class ShowMap extends React.Component {
 
     return (
 
-      <Scene
+      <Map
       style={{ width: '100vw', height: '100vh' }}
       mapProperties={{  basemap: "streets-vector" }}
       viewProperties={{
@@ -24,7 +25,7 @@ class ShowMap extends React.Component {
       }}
     >
     </MyFeatureLayer>
-  </Scene>
+  </Map>
 
  );
 
