@@ -1,32 +1,30 @@
 import React from 'react';
-import {loadModules} from 'react-arcgis';
-import EsriLoaderReact from 'esri-loader-react';
+import ReactDOM from 'react-dom';
+
 import { Scene } from 'react-arcgis';
-import EsriMarker from './EsriMarker';
+import BermudaTriangle from './BermudaTriangle';
+import MyFeatureLayer from './MyFeatureLayer';
 class ShowMap extends React.Component {
+  
   render() {
 
     return (
 
-    <Scene style={{ width: '100vw', height: '100vh' }}
-
-      mapProperties={{ basemap: 'streets-navigation-vector' }}
-
+      <Scene
+      style={{ width: '100vw', height: '100vh' }}
+      mapProperties={{  basemap: "streets-vector" }}
       viewProperties={{
-
-          center: [172.58804957425, -43.5106019527023],
-
-          zoom: 25
-
-      }}>
-
-
-
-       <EsriMarker  {...this.props}/>
-
-
-
-    </Scene>
+        center: [26.096, 44.439],
+        zoom: 10
+    }}>
+      <BermudaTriangle />
+    <MyFeatureLayer
+      featureLayerProperties={{
+        url: 'https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0'
+      }}
+    >
+    </MyFeatureLayer>
+  </Scene>
 
  );
 
