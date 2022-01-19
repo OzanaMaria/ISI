@@ -2,16 +2,29 @@ import { useState, useEffect } from 'react';
 import { loadModules } from 'esri-loader';
 
 const BermudaTriangle = (props) => {
-
+    
     const [graphic, setGraphic] = useState(null);
+    let long = " ";
+    let lat = " ";
+   // console.log(props.courses);
+    
     useEffect(() => {
-
+        
         loadModules(['esri/Graphic', "esri/layers/GraphicsLayer","esri/geometry/Point","esri/PopupTemplate"]).then(([Graphic,GraphicsLayer,Point,PopupTemplate]) => {
+            props.courses.map(course => (
+                course.dep_place ===  "Bucharest" ? 
+                   
+                (long = "26.096", lat = "44.439") : 
+                (course.dep_place ===  "Cluj"? (long = "26.096", lat = "44.439"): 
+                (long = " ",lat = " "))
+
+            ))
+           
             // Create a polygon geometry
             const polygon = {
                 type: "point", // autocasts as new Polygon()
-                longitude: 26.096,
-                latitude: 44.439
+                longitude: long,
+                latitude: lat
             };
 
             // Create a symbol for rendering the graphic

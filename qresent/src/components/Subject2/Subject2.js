@@ -95,7 +95,7 @@ class Subject extends Component {
                 
               </div>
             </div>
-            <Link style={{textDecoration: "none", color: "#ffffff", width: "50%"}} to={{pathname: '/ShowMap'}}>
+            <Link style={{textDecoration: "none", color: "#ffffff", width: "50%"}} to={{pathname: `/ShowMap/${this.state.currentCourse.id}`}}>
                   <Button className="col-md" variant="dark">See where your package is!</Button>
             </Link>
             

@@ -54,7 +54,7 @@ function App() {
                 <PrivateRoute exact path="/addOffer" component={AddOffer}/>
                 <PrivateRoute exact path="/addTruck" component={AddTruck}/>
                 <PrivateRoute exact path="/contracts" component={MyContracts}/>
-                <PrivateRoute exact path="/ShowMap" component={ShowMap}/>
+                <PrivateRoute exact path="/ShowMap/:id" component={ShowMap}/>
               </Switch>
             </AuthProvider>
           </Router>
