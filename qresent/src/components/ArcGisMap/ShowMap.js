@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Scene } from 'react-arcgis';
 import {Map} from 'react-arcgis';
 import BermudaTriangle from './BermudaTriangle';
+import BermudaTriangle2 from './BermudaTriangle2';
 import MyFeatureLayer from './MyFeatureLayer';
 import { database, auth } from "../../firebase";
 import { id } from 'date-fns/locale';
@@ -55,6 +56,7 @@ async componentDidMount() {
     }}>
      
       <BermudaTriangle courses = {(this.state.courses)} />
+    
     <MyFeatureLayer
       featureLayerProperties={{
         url: 'https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0'
