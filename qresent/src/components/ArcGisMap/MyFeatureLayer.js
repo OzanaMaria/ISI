@@ -7,7 +7,8 @@ const MyFeatureLayer = (props) => {
         loadModules(['esri/layers/FeatureLayer']).then(([FeatureLayer]) => {
             
             const myFeatureLayer = new FeatureLayer({
-                url: props.featureLayerProperties.url
+                url: props.featureLayerProperties.url,
+               
             });
 
             setMyFeatureLayer(myFeatureLayer);

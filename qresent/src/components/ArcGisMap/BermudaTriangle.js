@@ -15,6 +15,8 @@ const BermudaTriangle = (props) => {
         
         loadModules(['esri/Graphic', "esri/layers/GraphicsLayer","esri/geometry/Point","esri/PopupTemplate","esri/rest/route","esri/rest/support/RouteParameters"]).then(([Graphic,GraphicsLayer,Point,PopupTemplate, route, RouteParam]) => {
             const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
+            
+            let markerLayer = new GraphicsLayer();
             props.courses.map(course => (
                 course.dep_place ===  "Bucharest" ? 
                    
@@ -56,6 +58,12 @@ const BermudaTriangle = (props) => {
                     width: 1
                 }
             };
+            const markerSymbol = {
+                type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                url: "../Dashboard/react-logo.png",
+                width: "142px",
+                height: "167px"
+              };
               const theAtt = {
                 Name: "some name",
                 Owner: "some Owner",
@@ -69,19 +77,21 @@ const BermudaTriangle = (props) => {
             const graphic = new Graphic({
                 geometry: polygon,
                 symbol: fillSymbol,
-                attributes: theAtt,
-                popupTemplateL: pop
             });
             const graphic2 = new Graphic({
                 geometry: polygon2,
                 symbol: fillSymbol,
+            });
+            const markergraphic = new Graphic({
+                geometry: polygon2,
+                symbol: markerSymbol,
                 attributes: theAtt,
-                popupTemplateL: pop
+                popupTemplate: pop
             });
             setGraphic(graphic);
-            
+            markerLayer.add(markergraphic);
             props.view.graphics.push(graphic, graphic2);
-            
+            this.props.map.push(markerLayer);
         }).catch((err) => console.error(err));
 
         return function cleanup() {
