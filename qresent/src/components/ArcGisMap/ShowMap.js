@@ -9,7 +9,44 @@ import MyFeatureLayer from './MyFeatureLayer';
 import { database, auth } from "../../firebase";
 import { id } from 'date-fns/locale';
 import { loadModules } from 'esri-loader';
-const handleMapLoad = function (map, view) {
+
+let id2;
+
+const handleMapLoad = function (map, view, courses) {
+
+  let lat = 0;
+  let long = 0;
+  let nameTruck;
+  let dpplace;
+  let arvplace;
+  let trucksNameList = [];
+    const trucksRefs = database.ref('contract');
+
+    trucksRefs.on('value', snapshot => {
+        snapshot.forEach(childSnapshot => {
+            const childData = childSnapshot.val();
+            if(childData.id === id2){
+                trucksNameList.push(childData);
+                nameTruck = childData.id;
+                dpplace = childData.dep_place;
+                arvplace = childData.arr_place;
+                if(childData.dep_place ===  "Bucharest"){
+                  long = "26.096";
+                  lat = "44.439";
+                }
+                if(childData.dep_place ===  "Cluj"){
+                  long = "23.6"; lat = "46.76";
+                }
+                if(childData.dep_place ===  "Iasi"){
+                  long = "27.57"; lat = "47.16";
+                }
+                if(childData.dep_place ===  "Brasov"){
+                  long = "25.6"; lat = "45.56";
+                }
+            }
+        });
+    }); 
+
   loadModules(["esri/widgets/Search","esri/rest/locator"]).then(([Search,locator]) => {
     const locatorUrl =
     "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer";
@@ -24,12 +61,11 @@ const handleMapLoad = function (map, view) {
     view.popup.autoOpenEnabled = false;
     view.on("click", (event) => {
       // Get the coordinates of the click on the view
-      const lat = Math.round(event.mapPoint.latitude * 1000) / 1000;
-      const lon = Math.round(event.mapPoint.longitude * 1000) / 1000;
 
       view.popup.open({
         // Set the popup's title to the coordinates of the location
-        title: "Reverse geocode: [" + lon + ", " + lat + "]",
+        
+        title: "Name: " + nameTruck + " \ncoordonates: [" + long + ", " + lat + "]\n Departure Place: " + dpplace +"\n Arrival Place: " + arvplace,
         location: event.mapPoint // Set the location of the popup to the clicked location
       });
 
@@ -67,7 +103,7 @@ async componentDidMount() {
   const contractsRefs = database.ref('contract');
   const clientsOfferRefs = database.ref('materii');
   const email = auth.currentUser.email;
- 
+  id2 = this.props.match.params.id;
       await contractsRefs.on('value', snapshot => {
           snapshot.forEach(childSnapshot => {
               const childData = childSnapshot.val();
