@@ -7,7 +7,8 @@ const MapRoutes = (props) => {
         setDefaultOptions({ css : true});
         loadModules(["esri/config", 'esri/Graphic', "esri/rest/route", "esri/rest/support/RouteParameters", "esri/rest/support/FeatureSet"])
         .then(([esriConfig, Graphic, route, RouteParameters, FeatureSet]) => {
-            esriConfig.apiKey = API_KEY;
+            esriConfig.apiKey =  "AAPKb5d54d0f5bed4904a1412ffd1e131102PBWOZNi5MMDx9pBPBfsiEuDbfHW6kI6-Blr5538w5uYYaHtgAni96u-_ZJkUxF9x";
+            const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
             const routeParams = new RouteParameters({
                 stops: new FeatureSet({
                     features: props.view.graphics.toArray()

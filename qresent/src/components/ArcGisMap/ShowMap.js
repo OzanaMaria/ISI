@@ -9,7 +9,7 @@ import MyFeatureLayer from './MyFeatureLayer';
 import { database, auth } from "../../firebase";
 import { id } from 'date-fns/locale';
 import { loadModules } from 'esri-loader';
-
+import MapRoutes from './MapRoutes.js';
 let id2;
 
 const handleMapLoad = function (map, view, courses) {
@@ -138,7 +138,7 @@ async componentDidMount() {
     }}>
     
       <BermudaTriangle courses = {(this.state.courses)} />
-    
+    <MapRoutes/>
     <MyFeatureLayer
       featureLayerProperties={{
         url: 'https://services3.arcgis.com/GVgbJbqm8hXASVYi/arcgis/rest/services/Trailheads/FeatureServer/0',
