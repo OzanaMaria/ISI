@@ -6,7 +6,6 @@ import { database, auth } from "../../firebase";
 import './Dashboard.css'
 import { Link, useHistory } from "react-router-dom";
 import SearchBar from './SearchBar';
-import AddContract from './AddContract';
 import { Form } from "react-bootstrap";
 
 let groupRef = 1;

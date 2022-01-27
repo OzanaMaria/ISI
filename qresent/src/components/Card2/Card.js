@@ -9,7 +9,6 @@ const Card = props => {
       <div className="overflow">
         <img src={props.imgsrc} alt="Image 1" className='card-img-top'/>
       </div>
-      {console.log("cardcontract")}
       <div className="card-body text-dark">
         <h4 className="card-title">{ props.course.id }</h4>
         <p className="card-text text-secondary">

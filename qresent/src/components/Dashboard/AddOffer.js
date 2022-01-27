@@ -114,9 +114,9 @@ export default function AddOffer() {
                             <Form.Select ref={dep_place} required>
                                 <option>Select option</option>
                                 <option>Bucharest</option>
-                                <option>Cluj</option>
-                                <option>Brasov</option>
-                                <option>Iasi</option>
+                                <option>Buzau</option>
+                                <option>Pitesti</option>
+                                <option>Ploiesti</option>
                             </Form.Select>
                         </Form.Group>
 
@@ -129,9 +129,9 @@ export default function AddOffer() {
                             <Form.Select ref={arr_place} required>
                                 <option>Select option</option>
                                 <option>Bucharest</option>
-                                <option>Cluj</option>
-                                <option>Brasov</option>
-                                <option>Iasi</option>
+                                <option>Buzau</option>
+                                <option>Pitesti</option>
+                                <option>Ploiesti</option>
                             </Form.Select>
                         </Form.Group>
                         <Form.Group id="arr_date">
@@ -175,7 +175,6 @@ export default function AddOffer() {
                         
                         <Button onClick = {history.goBack} disabled={loading} className="w-100 auth-button" type="submit">
                             Submit request!
-                            {console.log("dsaaaaaa")}
                         </Button>
                     </Form>
                 </Card.Body>

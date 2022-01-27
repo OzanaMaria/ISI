@@ -54,7 +54,6 @@ export default function Add() {
         snapshot.forEach(childSnapshot => {
             const childData = childSnapshot.val();
             materialsNameList.push(childData);
-            console.log(childData);
         });
     }); 
     return (
@@ -85,9 +84,9 @@ export default function Add() {
                             <Form.Select ref={dep_place} required>
                                 <option>Select option</option>
                                 <option>Bucharest</option>
-                                <option>Cluj</option>
-                                <option>Brasov</option>
-                                <option>Iasi</option>
+                                <option>Buzau</option>
+                                <option>Pitesti</option>
+                                <option>Ploiesti</option>
                             </Form.Select>
                         </Form.Group>
 
@@ -100,9 +99,9 @@ export default function Add() {
                             <Form.Select ref={arr_place} required>
                                 <option>Select option</option>
                                 <option>Bucharest</option>
-                                <option>Cluj</option>
-                                <option>Brasov</option>
-                                <option>Iasi</option>
+                                <option>Buzau</option>
+                                <option>Pitesti</option>
+                                <option>Ploiesti</option>
                             </Form.Select>
                         </Form.Group>
                         <Form.Group id="arr_date">

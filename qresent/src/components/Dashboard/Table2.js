@@ -22,7 +22,6 @@ const Table2 = props => {
         });
       });
       database.ref('/materials').child(entry).remove();
-      console.log("deleted" + database.ref('/materials').child(entry).name);
       window.location.reload(false);
   }
 

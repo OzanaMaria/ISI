@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { loadModules } from 'esri-loader';
+import { database } from "../../firebase";
 
 const BermudaTriangle = (props) => {
     
@@ -8,32 +9,55 @@ const BermudaTriangle = (props) => {
     let lat = " ";
     let long2 = " ";
     let lat2 = " ";
-   // console.log(props.courses);
-    
-   
+
+
     useEffect(() => {
         
         loadModules(['esri/Graphic', "esri/layers/GraphicsLayer","esri/geometry/Point","esri/PopupTemplate","esri/rest/route","esri/rest/support/RouteParameters"]).then(([Graphic,GraphicsLayer,Point,PopupTemplate, route, RouteParam]) => {
             const routeUrl = "https://route-api.arcgis.com/arcgis/rest/services/World/Route/NAServer/Route_World";
             
+            const coordRefs = database.ref('coord');
+            let ver = 1;
+            let childData = "";
+            let cs;
+
+            coordRefs.on('value', snapshot => {
+                
+                snapshot.forEach(childSnapshot => {
+                    if(ver == 1){
+                    childData = childSnapshot.val();
+                    ver = 2;
+                    cs = childSnapshot;
+                    }
+                });
+            });     
+
             let markerLayer = new GraphicsLayer();
+
+            if(childData == ""){
             props.courses.map(course => (
                 course.dep_place ===  "Bucharest" ? 
                    
                 (long = "26.096", lat = "44.439") : 
-                (course.dep_place ===  "Cluj"? (long = "23.6", lat = "46.76"): 
-                (course.dep_place ===  "Iasi"? (long = "27.57", lat = "47.16"):  
-                (course.dep_place ===  "Brasov"? (long = "25.6", lat = "45.56"):
+                (course.dep_place ===  "Buzau"? (long = "26.82", lat = "45.15"): 
+                (course.dep_place ===  "Ploiesti"? (long = "26.01", lat = "44.95"):  
+                (course.dep_place ===  "Pitesti"? (long = "24.86", lat = "44.85"):
                 (long = " ", lat = " "))))
 
             ))
+            }else{
+                long = childData.long;
+                lat = childData.lat;
+                coordRefs.child(cs.key).remove();
+            }
+                
             props.courses.map(course => (
                 course.arr_place ===  "Bucharest" ? 
                    
                 (long2 = "26.096", lat2 = "44.439") : 
-                (course.arr_place ===  "Cluj"? (long2 = "23.6", lat2 = "46.76"): 
-                (course.arr_place ===  "Iasi"? (long2 = "27.57", lat2 = "47.16"):  
-                (course.arr_place ===  "Brasov"? (long2 = "25.6", lat2 = "45.56"):
+                (course.arr_place ===  "Buzau"? (long2 = "26.82", lat2 = "45.15"): 
+                (course.arr_place ===  "Ploiesti"? (long2 = "26.01", lat2 = "44.95"):  
+                (course.arr_place ===  "Pitesti"? (long2 = "24.86", lat2 = "44.85"):
                 (long2 = " ", lat2 = " "))))
 
             ))
@@ -91,7 +115,6 @@ const BermudaTriangle = (props) => {
             setGraphic(graphic);
             markerLayer.add(markergraphic);
             props.view.graphics.push(graphic, graphic2);
-            this.props.map.push(markerLayer);
         }).catch((err) => console.error(err));
 
         return function cleanup() {

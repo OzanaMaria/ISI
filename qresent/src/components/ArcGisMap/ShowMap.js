@@ -4,13 +4,14 @@ import ReactDOM from 'react-dom';
 import { Scene } from 'react-arcgis';
 import {Map} from 'react-arcgis';
 import BermudaTriangle from './BermudaTriangle';
-import BermudaTriangle2 from './BermudaTriangle2';
 import MyFeatureLayer from './MyFeatureLayer';
 import { database, auth } from "../../firebase";
 import { id } from 'date-fns/locale';
 import { loadModules } from 'esri-loader';
 import MapRoutes from './MapRoutes.js';
 let id2;
+
+
 
 const handleMapLoad = function (map, view, courses) {
 
@@ -34,14 +35,14 @@ const handleMapLoad = function (map, view, courses) {
                   long = "26.096";
                   lat = "44.439";
                 }
-                if(childData.dep_place ===  "Cluj"){
-                  long = "23.6"; lat = "46.76";
+                if(childData.dep_place ===  "Buzau"){
+                  long = "26.82"; lat = "45.15";
                 }
-                if(childData.dep_place ===  "Iasi"){
-                  long = "27.57"; lat = "47.16";
+                if(childData.dep_place ===  "Ploiesti"){
+                  long = "26.01"; lat = "44.95";
                 }
-                if(childData.dep_place ===  "Brasov"){
-                  long = "25.6"; lat = "45.56";
+                if(childData.dep_place ===  "Pitesti"){
+                  long = "24.86"; lat = "44.85";
                 }
             }
         });
@@ -99,26 +100,27 @@ class ShowMap extends React.Component {
 }
 async componentDidMount() {
   let coursesList = [];
+  let coordList = [];
   const subjectsRefs = database.ref('transpOffer');
   const contractsRefs = database.ref('contract');
   const clientsOfferRefs = database.ref('materii');
+  const coordRefs = database.ref('coord');
   const email = auth.currentUser.email;
   id2 = this.props.match.params.id;
       await contractsRefs.on('value', snapshot => {
           snapshot.forEach(childSnapshot => {
               const childData = childSnapshot.val();
               const nume = childData.name;
-              //console.log(childData.email_client);
-              //console.log(email);
               if(childData.id === this.props.match.params.id){
                   coursesList.push(childData);
                 }
 
               
           });
-         // console.log(coursesList);
-          this.setState({ courses : coursesList, email: email });
+          this.setState({ courses : coursesList, email: email});
+        
       });
+
   
 }
  

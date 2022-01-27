@@ -6,7 +6,7 @@ import { database, auth } from "../../firebase";
 import '../Dashboard/Dashboard.css';
 import { Link, useHistory } from "react-router-dom";
 
-class MyContracts extends Component{
+class Recomandation extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -20,8 +20,8 @@ class MyContracts extends Component{
     async componentDidMount() {
         let coursesList = [];
         
-        const contractsRefs = database.ref('contract');
-        const clientsOfferRefs = database.ref('materii');
+        const recomandationClient = database.ref('transpOffer');
+        const recomandationTransp = database.ref('materii');
         const email = auth.currentUser.email;
         let profCoursesList = [];
         let searchL = "";
@@ -30,10 +30,10 @@ class MyContracts extends Component{
             let studentCoursesList = [];
             
 
-            await contractsRefs.on('value', snapshot => {
+            await recomandationClient.on('value', snapshot => {
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val();
-                    if(childData.email_client === email){
+                    if(childData.arr_place === "Pitesti"){
                         coursesList.push(childData);
                     }
                     
@@ -44,12 +44,11 @@ class MyContracts extends Component{
         } else {
             
             
-            const searchword = database.ref('search');
-            await contractsRefs.on('value', snapshot => {
+            await recomandationTransp.on('value', snapshot => {
                 snapshot.forEach(childSnapshot => {
                     const childData = childSnapshot.val();
                     
-                    if(childData.email_transportator === email) {
+                    if(childData.arr_place === "Buzau") {
                         profCoursesList.push(childData);  
                     }
                 });
@@ -80,9 +79,9 @@ class MyContracts extends Component{
                     :     
                     (<div className="card text-center shadow">
                         <div className="card-body text-dark">
-                            <h4 className="card-title">Nu sunteti inrolat inca la niciun curs</h4>
+                            <h4 className="card-title">You don't have any recomandations!</h4>
                             <p className="card-text text-secondary">
-                                Va rugam reveniti mai tarziu
+                                Pls come back later!
                             </p>
                         </div>
                     </div>)
@@ -92,4 +91,4 @@ class MyContracts extends Component{
     }
 }
 
-export default MyContracts;
+export default Recomandation;

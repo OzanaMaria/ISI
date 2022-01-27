@@ -53,7 +53,6 @@ class Subject extends Component {
     const refs2 = database.ref('transpOffer');
     const email = auth.currentUser.email;
     const refscont = database.ref('contract');
-    console.log(email);
     if(!CheckIfUserIsStudent(email)){
     await refs.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
@@ -63,9 +62,7 @@ class Subject extends Component {
           this.setState({ currentCourse : childData, email: email});
           this.setState({materieKey : childSnapshot.key});
         }
-        console.log(ver);
         if(ver){
-          console.log(childSnapshot.key);
           refscont.push({'id': childData.id,   
                         'email_client':childData.email, 
                         'email_transportator':email,
@@ -87,14 +84,11 @@ class Subject extends Component {
       snapshot.forEach(childSnapshot => {
         const childData = childSnapshot.val();
        // console.log(childData.id);
-        console.log(this.props.match.params.id);
         if(childData.id === this.props.match.params.id) {
           this.setState({ currentCourse : childData, email: email});
           this.setState({materieKey : childSnapshot.key});
         }
-        console.log( childData);
         if(ver){
-          console.log(childSnapshot.key);
           refscont.push({'id':childData.id, 
                         'email_client':email, 
                         'email_transportator':childData.email, 

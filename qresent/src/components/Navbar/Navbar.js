@@ -47,6 +47,7 @@ export default function BootstrapNavbar() {
 
                                         }
                                         <Nav.Link href="/contracts">My Contracts</Nav.Link>
+                                        <Nav.Link href="/recomandation">Auto Recomandations</Nav.Link>
                                         <Nav.Link href="/profil">Profil</Nav.Link>
                                         <Nav.Link href="/login" onClick={handleLogout}>Log Out</Nav.Link>
                                     </Nav>

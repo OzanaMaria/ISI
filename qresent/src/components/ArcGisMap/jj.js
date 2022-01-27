@@ -71,7 +71,6 @@ class ShowMap extends React.Component {
       url: "https://services.arcgis.com/P3ePLMYs2RVChkJx/arcgis/rest/services/ACS_Marital_Status_Boundaries/FeatureServer/2",
       popupTemplate: template
     });
-    console.log("aici");
     map.add(featureLayer);  
     }).catch((err) => console.error(err));
   }

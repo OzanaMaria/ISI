@@ -34,11 +34,8 @@ class Subject extends Component {
     
     await refs.on('value', snapshot => {
       snapshot.forEach(childSnapshot => {
-        console.log("aici");
         const childData = childSnapshot.val();
-        console.log(childData);
         if(childData.id=== this.props.match.params.id) {
-          console.log(childData);
 
           this.setState({ currentCourse : childData, email: email});
           this.setState({materieKey : childSnapshot.key});

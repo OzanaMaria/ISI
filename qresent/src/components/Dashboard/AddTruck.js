@@ -69,7 +69,6 @@ export default function AddOffer() {
                         
                         <Button onClick = {history.goBack} disabled={loading} className="w-100 auth-button" type="submit">
                             Submit request!
-                            {console.log("dsaaaaaa")}
                         </Button>
                     </Form>
                 </Card.Body>
