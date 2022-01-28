@@ -54,7 +54,7 @@ export default function StudentsManagement() {
         <>
         {error && <Alert variant="danger">{error}</Alert>}
             <Card id='card-container-signup'>
-                <Card.Title style={{"marginBottom": -30, "marginTop": 20}}>Add student</Card.Title>
+                <Card.Title style={{"marginBottom": -30, "marginTop": 20}}>Add client</Card.Title>
                 <Card.Body>
                     <Form onSubmit={handleSubmit}>
                         <Form.Group id="name">
